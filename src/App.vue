@@ -28,11 +28,14 @@
     <div class="container">
       <div class="user-management-dashboard">
         <div class="tab-content" v-if="activeTab === 'userDetails'">
-          <input
-            type="text"
-            v-model="searchTerm"
-            placeholder="Search by username"
-          />
+          <div class="search-bar">
+            <input
+              type="text"
+              v-model="searchTerm"
+              placeholder="Search by username"
+            />
+            <i class="search-icon"></i>
+          </div>
           <table>
             <thead>
               <tr>
@@ -74,38 +77,48 @@
         </div>
 
         <div class="tab-content" v-else>
-    <form @submit.prevent="handleSubmit" class="account-creation-form">
-      <div class="form-group">
-        <div class="form-row">
-          <div class="form-field">
-            <label for="username">Username:</label>
-            <span class="required-symbol">*</span>
-            <input type="text" id="username" v-model="username" required />
-          </div>
-          <div class="form-field">
-            <label for="email">Email:</label>
-            <input type="email" id="email" v-model="email" />
-          </div>
+          <form @submit.prevent="handleSubmit" class="account-creation-form">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="username">Username:</label>
+                  <span class="required-symbol">*</span>
+                  <input
+                    type="text"
+                    id="username"
+                    v-model="username"
+                    required
+                  />
+                </div>
+                <div class="form-field">
+                  <label for="email">Email:</label>
+                  <input type="email" id="email" v-model="email" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="phone">Phone:</label>
+                  <input type="text" id="phone" v-model="phone" />
+                </div>
+                <div class="form-field">
+                  <label for="password">Password:</label>
+                  <span class="required-symbol">*</span>
+                  <input
+                    type="password"
+                    id="password"
+                    v-model="password"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit">Create Account</button>
+            </div>
+          </form>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="form-row">
-          <div class="form-field">
-            <label for="phone">Phone:</label>
-            <input type="text" id="phone" v-model="phone" />
-          </div>
-          <div class="form-field">
-            <label for="password">Password:</label>
-            <span class="required-symbol">*</span>
-            <input type="password" id="password" v-model="password" required />
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <button type="submit">Create Account</button>
-      </div>
-    </form>
-  </div>
       </div>
     </div>
 
@@ -459,13 +472,13 @@ button:hover {
 
 .account-creation-form input {
   padding: 17px;
-    border: 1px solid #ddd;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    margin-right: 200px;
-    box-sizing: border-box;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-right: 200px;
+  box-sizing: border-box;
 }
 
 .account-creation-form button {
@@ -481,4 +494,6 @@ button:hover {
 .account-creation-form button:hover {
   background-color: #0056b3;
 }
+
+
 </style>
