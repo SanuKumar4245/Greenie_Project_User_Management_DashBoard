@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="main-container">
     <div class="navbar">
       <div class="brand">
-        <b><i>User Management</i></b>
+        <b><i>User Management Dashboard</i></b>
       </div>
       <div class="nav-links">
         <router-link
@@ -164,7 +164,11 @@
         <button @click="closeSuccessPopup">Close</button>
       </div>
     </div>
+    <div class="footer">
+    <p>&copy; 2023 Your Website Name. All rights reserved.</p>
   </div>
+  </div>
+  
 </template>
 
 <script>
@@ -264,13 +268,28 @@ export default {
 </script>
 
 <style scoped>
+* {
+  box-sizing:border-box;
+  /* margin: 0;
+  padding: 0; */
+}
 body {
   margin: 0;
   padding: 0;
   font-family: "Lato", sans-serif;
-  background-size: cover;
-  background-position: center;
+  min-height: 100vh; /* Set the minimum height to 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
+  /* background-size: cover; */
+  /* background-position: center; */
 }
+.main-container {
+  background-color: #df2d2dd1; /* Light gray background color */
+  /* height: 100%; */
+  flex: 1;
+  min-height:100vh
+}
+
 
 .container {
   display: flex;
@@ -281,7 +300,7 @@ body {
 
 .user-management-dashboard {
   margin-top: 50px;
-  background-color: #f4f4f4;
+  background-color: #f5f5f5; /* Light gray background color */
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   color: #333;
@@ -293,15 +312,17 @@ body {
 /* Styles for tabs and navbar */
 .navbar {
   position: sticky;
-  top: 0;
+  top: 0px;
   z-index: 1000;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #3498db;
+  background-color: #0d9ff3;
   padding: 15px;
-  border-radius: 8px;
+  /* border-radius: 8px; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
   margin-bottom: 10px;
 }
 
@@ -309,6 +330,11 @@ body {
   color: #fff;
   font-size: 1.5em;
   font-family: "Lato", sans-serif; /* Add Lato font to the brand */
+}
+
+.brand i {
+  font-style: normal; /* Set font style to normal for the i element */
+  font-weight: bold; /* Add bold font weight to the i element */
 }
 
 .nav-links {
@@ -326,7 +352,7 @@ body {
 }
 
 .nav-links router-link.active {
-  background-color: #60e5ef;
+  background-color: #110a0a;
 }
 
 /* Styles for the table */
@@ -431,7 +457,7 @@ button:hover {
 }
 /* Add a style for success popups */
 .success-popup {
-  background: #4caf50; /* Green background color */
+  background: #0d9ff3; /* Green background color */
   color: white;
 }
 .account-creation-form {
@@ -494,6 +520,15 @@ button:hover {
 .account-creation-form button:hover {
   background-color: #0056b3;
 }
-
+.footer {
+  background-color: #0d9ff3; /* Footer background color */
+  color: #fff; /* Footer text color */
+  text-align: center;
+  margin-top: 100px;
+  padding: 10px;
+  position:static;
+  bottom: 0;
+  width: 100%;
+}
 
 </style>
