@@ -1,10 +1,13 @@
 <template>
+  <!-- Main Container -->
   <div class="main-container">
+    <!-- Navbar -->
     <div class="navbar">
       <div class="brand">
         <b><i>User Management Dashboard</i></b>
       </div>
       <div class="nav-links">
+        <!-- User Details Tab Link -->
         <router-link
           to="/user-details"
           class="btn"
@@ -14,6 +17,7 @@
           User Details
         </router-link>
 
+        <!-- Account Creation Tab Link -->
         <router-link
           to="/account-creation"
           class="btn"
@@ -25,9 +29,12 @@
       </div>
     </div>
 
+    <!-- Main Content Container -->
     <div class="container">
       <div class="user-management-dashboard">
+        <!-- User Details Tab Content -->
         <div class="tab-content" v-if="activeTab === 'userDetails'">
+          <!-- Search Bar -->
           <div class="search-bar">
             <input
               type="text"
@@ -36,6 +43,8 @@
             />
             <i class="search-icon"></i>
           </div>
+          
+          <!-- User Details Table -->
           <table>
             <thead>
               <tr>
@@ -48,7 +57,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="user in filteredUsers" :key="user.id">
+              <!-- User Details Rows -->
+              <tr v-for="user in paginatedUsers" :key="user.id">
                 <td>
                   <div class="user-info">
                     <div class="avatar">
@@ -59,11 +69,13 @@
                     </div>
                   </div>
                 </td>
+                <!-- Other User Details Columns -->
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone }}</td>
                 <td>{{ user.id }}</td>
                 <td>{{ user.creationDate }}</td>
                 <td>
+                  <!-- Button to Generate Report -->
                   <button
                     @click="openUserReportModal(user)"
                     class="generate-report-btn"
@@ -74,10 +86,27 @@
               </tr>
             </tbody>
           </table>
+          
+          <!-- Pagination Controls -->
+          <div class="pagination">
+            <button @click="currentPage -= 1" :disabled="currentPage === 1">
+              Previous
+            </button>
+            <span>{{ currentPage }}</span>
+            <button
+              @click="currentPage += 1"
+              :disabled="currentPage === totalPages"
+            >
+              Next
+            </button>
+          </div>
         </div>
 
+        <!-- Account Creation Tab Content -->
         <div class="tab-content" v-else>
+          <!-- Account Creation Form -->
           <form @submit.prevent="handleSubmit" class="account-creation-form">
+            <!-- Username and Email Fields -->
             <div class="form-group">
               <div class="form-row">
                 <div class="form-field">
@@ -96,6 +125,8 @@
                 </div>
               </div>
             </div>
+            
+            <!-- Phone and Password Fields -->
             <div class="form-group">
               <div class="form-row">
                 <div class="form-field">
@@ -114,8 +145,12 @@
                 </div>
               </div>
             </div>
+            
+            <!-- Submit Button -->
             <div class="form-group">
-              <button type="submit">Create Account</button>
+              <button type="submit" :disabled="loading">
+                {{ loading ? "Creating Account..." : "Create Account" }}
+              </button>
             </div>
           </form>
         </div>
@@ -159,16 +194,18 @@
     <!-- User Creation Success Popup -->
     <div v-if="isAccountCreationSuccess" class="popup-overlay">
       <div class="popup-content success-popup">
+        <!-- Success Popup Content -->
         <h2>Account Created Successfully!</h2>
         <p>Your account has been created successfully.</p>
         <button @click="closeSuccessPopup">Close</button>
       </div>
     </div>
+    
+    <!-- Footer -->
     <div class="footer">
-    <p>&copy; 2023 Your Website Name. All rights reserved.</p>
+      <p>&copy; 2023 Your Website Name. All rights reserved.</p>
+    </div>
   </div>
-  </div>
-  
 </template>
 
 <script>
@@ -177,6 +214,7 @@ import { mockUsers } from "./mockData";
 export default {
   data() {
     return {
+      // Data Properties
       activeTab: "userDetails",
       searchTerm: "",
       users: [],
@@ -187,9 +225,13 @@ export default {
       isAccountCreationSuccess: false,
       email: "",
       phone: "",
+      currentPage: 1,
+      perPage: 5, // Adjust the number of items per page as needed
+      loading: false,
     };
   },
   computed: {
+    // Computed Properties
     filteredUsers() {
       if (this.searchTerm === "") {
         return this.users;
@@ -201,8 +243,17 @@ export default {
         );
       });
     },
+    paginatedUsers() {
+      const start = (this.currentPage - 1) * this.perPage;
+      const end = start + this.perPage;
+      return this.filteredUsers.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredUsers.length / this.perPage);
+    },
   },
   methods: {
+    // Methods
     fetchUserData() {
       this.users = [...mockUsers];
     },
@@ -225,42 +276,54 @@ export default {
       this.isAccountCreationSuccess = false;
     },
     handleSubmit() {
-      if (this.activeTab === "accountCreation") {
-        const newUser = {
-          id: this.users.length + 1,
-          username: this.username,
-          email: this.email || "N/A", // Use provided email or generate a default one
-          phone: this.phone || "XXX-XXX-XXX", // Use provided phone or set to "N/A"
-          creationDate: new Date().toISOString().split("T")[0],
-          avatar: `https://i.pravatar.cc/300?u=${this.users.length + 1}`, // Unique avatar URL
-        };
+      this.loading = true;
+      setTimeout(() => {
+        // Your existing logic for form submission
+        if (this.activeTab === "accountCreation") {
+          // Creating a new user
+          const newUser = {
+            id: this.users.length + 1,
+            username: this.username,
+            email: this.email || "N/A",
+            phone: this.phone || "XXX-XXX-XXX",
+            creationDate: new Date().toISOString().split("T")[0],
+            avatar: `https://i.pravatar.cc/300?u=${this.users.length + 1}`,
+          };
 
-        this.users.push(newUser);
-        console.log(`Created account for user: ${this.username}`);
-        // Show the account creation success popup
-        this.isAccountCreationSuccess = true;
+          // Adding the new user to the list
+          this.users.push(newUser);
+          console.log(`Created account for user: ${this.username}`);
 
-        // After a delay of 1 second, scroll to the new user
-        this.$nextTick(() => {
-          const newUserRow = this.$refs[`user-${newUser.id}`];
-          if (newUserRow && newUserRow.length > 0) {
-            newUserRow[0].scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        });
-      } else {
-        console.log("Handling other logic for user details");
-      }
+          // Showing the account creation success popup
+          this.isAccountCreationSuccess = true;
 
-      this.username = "";
-      this.password = "";
-      this.email = ""; // Clear the email field after submission
-      this.phone = ""; // Clear the phone field after submission
+          // After a delay of 1 second, scroll to the new user
+          this.$nextTick(() => {
+            const newUserRow = this.$refs[`user-${newUser.id}`];
+            if (newUserRow && newUserRow.length > 0) {
+              newUserRow[0].scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          });
+        } else {
+          console.log("Handling other logic for user details");
+        }
+
+        // Resetting form fields
+        this.username = "";
+        this.password = "";
+        this.email = "";
+        this.phone = "";
+
+        // Reset loading state
+        this.loading = false;
+      }, 2000); // Simulating a delay of 2 seconds
     },
   },
   created() {
+    // Fetching initial user data on component creation
     this.users = [...mockUsers];
     console.log("Fetched user data:", this.users);
   },
@@ -268,29 +331,27 @@ export default {
 </script>
 
 <style scoped>
+/* Global Styles */
 * {
-  box-sizing:border-box;
-  /* margin: 0;
-  padding: 0; */
+  box-sizing: border-box;
 }
+
 body {
   margin: 0;
   padding: 0;
   font-family: "Lato", sans-serif;
-  min-height: 100vh; /* Set the minimum height to 100% of the viewport height */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* background-size: cover; */
-  /* background-position: center; */
 }
+
 .main-container {
-  background-color: #df2d2dd1; /* Light gray background color */
-  /* height: 100%; */
+  background-color: #df2d2dd1;
   flex: 1;
-  min-height:100vh
+  min-height: 100vh;
 }
 
-
+/* Container Styles */
 .container {
   display: flex;
   justify-content: center;
@@ -300,7 +361,7 @@ body {
 
 .user-management-dashboard {
   margin-top: 50px;
-  background-color: #f5f5f5; /* Light gray background color */
+  background-color: #f5f5f5;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   color: #333;
@@ -309,7 +370,7 @@ body {
   margin: 0 auto;
 }
 
-/* Styles for tabs and navbar */
+/* Navbar Styles */
 .navbar {
   position: sticky;
   top: 0px;
@@ -320,21 +381,19 @@ body {
   align-items: center;
   background-color: #0d9ff3;
   padding: 15px;
-  /* border-radius: 8px; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
   margin-bottom: 10px;
 }
 
 .brand {
   color: #fff;
   font-size: 1.5em;
-  font-family: "Lato", sans-serif; /* Add Lato font to the brand */
+  font-family: "Lato", sans-serif;
 }
 
 .brand i {
-  font-style: normal; /* Set font style to normal for the i element */
-  font-weight: bold; /* Add bold font weight to the i element */
+  font-style: normal;
+  font-weight: bold;
 }
 
 .nav-links {
@@ -348,14 +407,16 @@ body {
   border-radius: 4px;
   margin-right: 10px;
   transition: background-color 0.3s ease-in-out;
-  font-family: "Lato", sans-serif; /* Add Lato font to the navbar links */
+  font-family: "Lato", sans-serif;
+  cursor: pointer;
 }
 
 .nav-links router-link.active {
   background-color: #110a0a;
+  cursor: pointer;
 }
 
-/* Styles for the table */
+/* Table Styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -375,7 +436,7 @@ thead {
   color: #fff;
 }
 
-/* Styles for form and buttons */
+/* Form and Button Styles */
 .form-group {
   margin-bottom: 20px;
   display: flex;
@@ -434,7 +495,7 @@ button:hover {
   width: 400px;
 }
 
-/* Add styles for avatars */
+/* Avatar Styles */
 .user-info {
   display: flex;
   align-items: center;
@@ -455,11 +516,14 @@ button:hover {
   object-fit: cover;
   margin-right: 20px;
 }
-/* Add a style for success popups */
+
+/* Success Popup Styles */
 .success-popup {
-  background: #0d9ff3; /* Green background color */
+  background: #0d9ff3;
   color: white;
 }
+
+/* Account Creation Form Styles */
 .account-creation-form {
   display: flex;
   flex-direction: column;
@@ -477,7 +541,7 @@ button:hover {
 }
 
 .account-creation-form .form-field {
-  width: 48%; /* Adjust the width as needed */
+  width: 48%;
   position: relative;
 }
 
@@ -488,7 +552,7 @@ button:hover {
 }
 
 .account-creation-form .required-symbol {
-  color: #ff0000; /* Adjust the color as needed */
+  color: #ff0000;
   position: absolute;
   top: 0;
   right: 0;
@@ -520,15 +584,46 @@ button:hover {
 .account-creation-form button:hover {
   background-color: #0056b3;
 }
+
+/* Footer Styles */
 .footer {
-  background-color: #0d9ff3; /* Footer background color */
-  color: #fff; /* Footer text color */
+  background-color: #0d9ff3;
+  color: #fff;
   text-align: center;
   margin-top: 100px;
   padding: 10px;
-  position:static;
+  position: static;
   bottom: 0;
   width: 100%;
 }
 
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.pagination button:hover {
+  background-color: #0056b3;
+}
+
+.pagination span {
+  padding: 10px 15px;
+  background-color: #f8f9fa;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 </style>

@@ -7,9 +7,9 @@ This project is a User Management Dashboard built with Vue.js. It provides funct
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
-- [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
+- [Screenshots](#screenshots)
 
 ## Installation
 To run this project locally, follow these steps:
@@ -44,13 +44,6 @@ The User Management Dashboard consists of two main tabs:
   - Allows creating a new user account.
   - Enter the username and password, then click "Create Account."
 
-## Project Structure
-- `src/App.vue`: Vue instance initialization and main component structure.
-- `src/components/`: Contains Vue components for different sections of the dashboard.
-- `src/mockData.js`: Mock data for initial user details.
-- `src/styles/`: CSS styles for the components.
-- `public/`: Static assets and HTML template.
-
 ## Contributing
 If you'd like to contribute to this project, follow these steps:
 
@@ -70,4 +63,21 @@ If you'd like to contribute to this project, follow these steps:
 5. Open a pull request on the original repository.
 
 ## License
-This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for your own purposes.
+This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for your purposes.
+
+## Screenshots
+
+### User Details Tab
+![User Details Tab](assets\User_Details_Image.jpg)
+
+*Displays a table of user details.*
+
+### Account Creation Tab
+![Account Creation Tab](assets\Account_Creation_Image.jpg)
+
+*Allows creating a new user account.*
+
+### User Report Popup
+![User Report Popup](assets\Popup_Image.jpg)
+
+*Shows detailed information about a user.*
