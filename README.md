@@ -68,16 +68,19 @@ This project is licensed under the MIT License. Feel free to use, modify, and di
 ## Screenshots
 
 ### User Details Tab
-![User Details Tab](assets\User_Details_Image.jpg)
+![image](https://github.com/SanuKumar4245/Greenie_Project_User_Management_DashBoard/assets/91661736/c4435f2b-9d16-49db-9eeb-0adca92adae8)
+
 
 *Displays a table of user details.*
 
 ### Account Creation Tab
-![Account Creation Tab](assets\Account_Creation_Image.jpg)
+![image](https://github.com/SanuKumar4245/Greenie_Project_User_Management_DashBoard/assets/91661736/392696e2-511d-413f-9c13-c31c0e9d4342)
+
 
 *Allows creating a new user account.*
 
 ### User Report Popup
-![User Report Popup](assets\Popup_Image.jpg)
+![image](https://github.com/SanuKumar4245/Greenie_Project_User_Management_DashBoard/assets/91661736/1d996ba2-2ec1-41a2-8e41-c5e68271cece)
+
 
 *Shows detailed information about a user.*
