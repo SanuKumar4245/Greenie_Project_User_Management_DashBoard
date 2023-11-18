@@ -4,6 +4,10 @@ User Management Dashboard
 ## Project Description
 This project is a User Management Dashboard built with Vue.js. It provides functionality for viewing user details and creating user accounts. The dashboard is designed with a clean and user-friendly interface, allowing easy navigation between different sections.
 
+### Video Demo
+Watch the video below for a demonstration of the User Management Dashboard:
+https://github.com/SanuKumar4245/Greenie_Project_User_Management_DashBoard/assets/91661736/b9361932-1a31-4754-99d6-74e75da17ab6
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
